@@ -1,0 +1,37 @@
+CLASS Account
+    ATTRIBUTES: accountHolder, balance
+    METHOD deposit(amount)
+        balance += amount
+        PRINT "Deposited: " + amount + " | Balance: " + balance
+
+    METHOD withdraw(amount)
+        IF balance >= amount
+            balance -= amount
+            PRINT "Withdrawn: " + amount + " | Balance: " + balance
+        ELSE
+            PRINT "Insufficient balance!"
+
+CLASS SavingAccount EXTENDS Account
+    ATTRIBUTE minBalance = 1000
+    METHOD withdraw(amount)   
+        IF balance - amount >= minBalance
+            balance -= amount
+            PRINT "Saving Withdrawn: " + amount + " | Balance: " + balance
+        ELSE
+            PRINT "Cannot withdraw! Maintain minimum balance: " + minBalance
+
+CLASS CurrentAccount EXTENDS Account
+    ATTRIBUTE overdraftLimit = -5000
+    METHOD withdraw(amount)   
+        IF balance - amount >= overdraftLimit
+            balance -= amount
+            PRINT "Current Withdrawn: " + amount + " | Balance: " + balance
+        ELSE
+            PRINT "Overdraft limit exceeded!"
+
+MAIN PROGRAM
+    CREATE savingAcc = SavingAccount("Amit", 5000)
+    CREATE currentAcc = CurrentAccount("Rohit", 2000)
+
+    savingAcc.withdraw(4500) 
+    currentAcc.withdraw(6000)
